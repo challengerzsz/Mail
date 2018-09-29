@@ -2,12 +2,19 @@ server:
   port: 9999
   servlet:
     context-path: /works
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/works?useSSL=false&characterEncoding=utf8
     username: root
     password: agytorudhcv11
     driver-class-name: com.mysql.jdbc.Driver
+
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+
 
   redis:
     database: 1
