@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>欢迎来到邮箱系统</title>
+    <title>注册页</title>
     <link th:href="@{./js/layui/css/layui.css}" rel="stylesheet"/>
     <script th:src="@{./js/layui/layui.all.js}"></script>
     <style>
@@ -24,7 +24,7 @@
     </style>
 </head>
 <body>
-<form class="layui-form" action="./authentication/login" method="post">
+<form class="layui-form" action="./user/register" method="post">
     <div class="layui-form-item">
         <label class="layui-form-label">邮箱</label>
         <div class="layui-input-inline">
@@ -39,13 +39,23 @@
         <div class="layui-form-mid layui-word-aux"></div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">问题</label>
+        <div class="layui-input-inline">
+            <input type="text" name="question" required lay-verify="required" placeholder="请输入找回密码问题" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">答案</label>
+        <div class="layui-input-inline">
+            <input type="text" name="answer" required lay-verify="required" placeholder="请输入问题答案" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">登录</button>
-            <!--<form action="./register" method="get">-->
-                <!--<button type="submit" class="layui-btn layui-btn-primary">注册</button>-->
-            <!--</form>-->
-
-            <input type="button" class="layui-btn layui-btn-primary" id="button" value="注册" onclick="window.location.href='./register'"/>
+            <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo">提交</button><!--<form action="./register" method="get">-->
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
     <div>

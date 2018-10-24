@@ -33,7 +33,7 @@ public class WebSecurityController {
 
     @RequestMapping("/authentication/require")
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-    public void requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         SavedRequest savedRequest = requestCache.getRequest(request, response);
 
@@ -42,9 +42,8 @@ public class WebSecurityController {
             logger.info("targetUrl {}", targetUrl);
             if (StringUtils.endsWithIgnoreCase(targetUrl, ".html")) {
                 redirectStrategy.sendRedirect(request, response, SecurityConstants.LOGIN_PAGE);
-            } else {
-                redirectStrategy.sendRedirect(request, response, SecurityConstants.NEED_AUTHENTICATION_PAGE);
             }
         }
+        return SecurityConstants.NEED_AUTHENTICATION_PAGE;
     }
 }

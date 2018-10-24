@@ -12,11 +12,21 @@ public class SecurityConstants {
      */
     public static final String DEFAULT_UNAUTHENTICATED_URL = "/authentication/require";
     /**
+     * 处理登录逻辑的url
+     */
+    public static final String LOGIN_PROCESSING_URL = "/authentication/login";
+    /**
      * 默认主页
-     *
      */
     public static final String LOGIN_PAGE = "/";
-
+    /**
+     * 默认注册页
+     */
+    public static final String REGISTER_PAGE = "/register";
+    /**
+     * 默认注册接口
+     */
+    public static final String REGISTER_PAGE_API = "/user/register";
 
 
     /**

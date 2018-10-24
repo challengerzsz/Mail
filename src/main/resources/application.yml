@@ -27,3 +27,8 @@ spring:
         max-active: 8
   session:
     store-type: none
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update

@@ -21,9 +21,19 @@ public class ResourceController {
         return "html/main";
     }
 
+    @GetMapping("/register")
+    public String register() {
+        return "html/register";
+    }
+
     @GetMapping("/bad/{code}")
     public String getBad(@PathVariable Integer code) {
         return "bad/" + String.valueOf(code);
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "html/test";
     }
 
 
