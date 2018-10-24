@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>开始使用layui</title>
+    <title>欢迎来到mail系统</title>
     <link rel="stylesheet" href="./js/layui/css/layui.css">
 </head>
 <body>
@@ -76,7 +76,7 @@
         var form = layui.form;
 
         //监听提交
-        form.on('submit(formDemo)', function(data){
+        login.on('submit(formDemo)', function(data){
             layer.msg(JSON.stringify(data.field));
             return false;
         });

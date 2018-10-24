@@ -1,4 +1,4 @@
-package com.bsb.works;
+package com.bsb.mail;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

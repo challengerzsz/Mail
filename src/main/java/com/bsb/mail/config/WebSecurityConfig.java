@@ -1,6 +1,6 @@
-package com.bsb.works.config;
+package com.bsb.mail.config;
 
-import com.bsb.works.common.SecurityConstants;
+import com.bsb.mail.common.SecurityConstants;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -20,7 +20,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(
                         SecurityConstants.LOGIN_PAGE,
-                        SecurityConstants.DEFAULT_UNAUTHENTICATED_URL).permitAll()
+                        SecurityConstants.DEFAULT_UNAUTHENTICATED_URL,
+                        SecurityConstants.BAD_URLS).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
