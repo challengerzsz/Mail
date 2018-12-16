@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -36,34 +35,33 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("/dev/login")
-    public ModelAndView login(ModelAndView modelAndView, @RequestParam String username, @RequestParam String password) {
+    public ModelAndView login(ModelAndView modelAndView, @RequestParam String username,
+                              @RequestParam String password, HttpSession session) {
 
         if (StringUtils.isNoneBlank(username, password)) {
             logger.info("username {}, password {}", username, password);
-            User user = userService.login(username, password);
+            User user = userService.login(username, password).getData();
             if (user != null) {
                 modelAndView.addObject("user", user);
             }
         }
-        return null;
+        modelAndView.setViewName("/bad/500.html");
+
+        return modelAndView;
     }
 
     @PostMapping("/register")
-    public void register(HttpServletRequest request,
-                           HttpServletResponse response,
-                           @RequestParam String username,
-                           @RequestParam String password,
-                           @RequestParam String question,
-                           @RequestParam String answer) throws IOException {
+    public ModelAndView register(ModelAndView modelAndView, @RequestParam String username,
+                         @RequestParam String password, @RequestParam String question,
+                         @RequestParam String answer) throws IOException {
         if (StringUtils.isNoneBlank(username, password, question, answer)) {
             Boolean result = userService.register(username, password, question, answer);
             if (result) {
-//                modelAndView.setViewName(SecurityConstants.LOGIN_PAGE);
+                modelAndView.setViewName(SecurityConstants.LOGIN_PAGE);
             } else {
-//                modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+                modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-
-        redirectStrategy.sendRedirect(request, response, "/");
+        return modelAndView;
     }
 }

@@ -1,6 +1,7 @@
 package com.bsb.mail.config;
 
 import com.bsb.mail.web.jpa.IUserRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,10 +27,13 @@ public class MailUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        String password = userRepository.getPassword(username);
-        if (password != null) {
-            return new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("user"));
+        if (!StringUtils.isAllEmpty(username)) {
+            String password = userRepository.getPassword(username);
+            if (password != null) {
+                return new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("user"));
+            }
         }
+
         return null;
     }
 }

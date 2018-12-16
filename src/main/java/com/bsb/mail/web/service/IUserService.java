@@ -1,5 +1,6 @@
 package com.bsb.mail.web.service;
 
+import com.bsb.mail.common.ServerResponse;
 import com.bsb.mail.pojo.User;
 
 /**
@@ -8,7 +9,7 @@ import com.bsb.mail.pojo.User;
  */
 public interface IUserService {
 
-    User login(String username, String password);
+    ServerResponse<User> login(String username, String password);
 
     Boolean register(String username, String password, String question, String answer);
 }
