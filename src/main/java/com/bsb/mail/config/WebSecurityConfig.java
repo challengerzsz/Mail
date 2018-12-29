@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
+import org.springframework.security.web.firewall.HttpFirewall;
 
 /**
  * @Author: zeng
@@ -29,6 +31,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public HttpFirewall httpFirewall() {
+        return new DefaultHttpFirewall();
     }
 
     @Override
@@ -50,8 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(mailAuthenticationFailureHandler)
                 .and()
                 .logout()
-                .logoutUrl("/user/logout")
-                .logoutSuccessUrl("/")
+                .logoutUrl(SecurityConstants.LOGOUT_URL)
+                .logoutSuccessUrl(SecurityConstants.LOGIN_PAGE)
                 .invalidateHttpSession(true)
                 .and()
                 .headers()

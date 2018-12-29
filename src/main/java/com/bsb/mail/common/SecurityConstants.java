@@ -27,6 +27,10 @@ public class SecurityConstants {
      * 默认注册接口
      */
     public static final String REGISTER_PAGE_API = "/user/register";
+    /**
+     * 用户默认登出接口
+     */
+    public static final String LOGOUT_URL = "/user/logout";
 
 
     /**
@@ -45,5 +49,6 @@ public class SecurityConstants {
      * 500
      */
     public static final String INNER_ERROR_PAGE = "/bad/500";
+
 
 }
