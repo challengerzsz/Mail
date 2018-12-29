@@ -39,14 +39,16 @@ public class User implements UserDetails {
     @Column(name = "answer")
     private String answer;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "createTime")
     private String createTime;
 
     @Column(name = "updateTime")
     private String updateTime;
 
-    public User(Integer id, String username, String password, String question, String answer) {
-        this.id = id;
+    public User(String username, String password, String question, String answer) {
         this.username = username;
         this.password = password;
         this.question = question;

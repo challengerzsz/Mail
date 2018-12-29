@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -53,12 +52,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/user/logout")
                 .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .and()
+                .headers()
+                .frameOptions().disable()
                 .and()
                 .csrf().disable();
     }
 
     @Override
-    public void configure(WebSecurity web) {
+    public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/js/**", "/css/**");
     }
 }

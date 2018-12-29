@@ -1,8 +1,11 @@
 package com.bsb.mail.authentication;
 
 import com.bsb.mail.common.Const;
+import com.bsb.mail.web.dao.IUserRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -23,6 +26,9 @@ import java.io.IOException;
 @Component
 public class MailAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+    @Autowired
+    private IUserRepository userRepository;
+
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
@@ -36,7 +42,12 @@ public class MailAuthenticationSuccessHandler implements AuthenticationSuccessHa
         logger.info("登录成功");
         logger.info("principal : {}  username : {} ", authentication.getPrincipal(), user.getUsername());
 
+        String userImage = userRepository.getUserImage(user.getUsername());
+        if (StringUtils.isEmpty(userImage)) {
+            userImage = Const.DEFAULT_USER_IMAGE;
+        }
         session.setAttribute(Const.CURRENT_USER, user.getUsername());
+        session.setAttribute(Const.CURRENT_USER_IMAGE, userImage);
         redirectStrategy.sendRedirect(request, response, "/main");
     }
 

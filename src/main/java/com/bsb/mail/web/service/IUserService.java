@@ -9,11 +9,11 @@ import com.bsb.mail.model.User;
  */
 public interface IUserService {
 
-    ServerResponse<User> login(String username, String password);
-
     Boolean register(String username, String password, String question, String answer);
 
-    boolean checkIfUserAlreadyBindThisEmail(String username, String emailAddress);
+    Boolean checkIfUserAlreadyBindThisEmail(String username, String emailAddress);
 
     ServerResponse<String> bind(String username, String emailAddress);
+
+    ServerResponse<String> checkIfBind(String username);
 }

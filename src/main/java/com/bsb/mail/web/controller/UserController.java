@@ -4,7 +4,6 @@ import com.bsb.mail.common.Const;
 import com.bsb.mail.common.SecurityConstants;
 import com.bsb.mail.common.ServerResponse;
 import com.bsb.mail.common.util.RegexUtil;
-import com.bsb.mail.model.User;
 import com.bsb.mail.web.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -22,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 /**
  * @Author: zeng
@@ -42,30 +40,20 @@ public class UserController {
     @Autowired
     private RegexUtil regexUtil;
 
-    @PostMapping("/dev/login")
-    public ModelAndView login(ModelAndView modelAndView, @RequestParam String username,
-                              @RequestParam String password, HttpSession session) {
-
-        if (StringUtils.isNoneBlank(username, password)) {
-            logger.info("username {}, password {}", username, password);
-            User user = userService.login(username, password).getData();
-            if (user != null) {
-                modelAndView.addObject("user", user);
-            }
-        }
-        modelAndView.setViewName("/bad/500.html");
-
-        return modelAndView;
-    }
-
     @PostMapping("/register")
     public ModelAndView register(ModelAndView modelAndView, @RequestParam String username,
-                         @RequestParam String password, @RequestParam String question,
-                         @RequestParam String answer) throws IOException {
-        if (StringUtils.isNoneBlank(username, password, question, answer)) {
+                                 @RequestParam String password, @RequestParam() String confirmPassword,
+                                 @RequestParam String question, @RequestParam String answer) {
+
+        if (StringUtils.isNoneBlank(username, password, confirmPassword, question, answer)) {
+
+            if (!password.equals(confirmPassword)) {
+                modelAndView.addObject("message", "确认密码与密码不一致");
+            }
+
             Boolean result = userService.register(username, password, question, answer);
             if (result) {
-                modelAndView.setViewName(SecurityConstants.LOGIN_PAGE);
+                modelAndView.setViewName("redirect:" + SecurityConstants.LOGIN_PAGE);
             } else {
                 modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -78,7 +66,7 @@ public class UserController {
     public ServerResponse<String> binding(HttpServletRequest request, @RequestParam("emailAddress") String emailAddress,
                                           @RequestParam("emailPassword") String emailPassword) {
 
-        if (StringUtils.isAllEmpty(emailAddress, emailAddress)) {
+        if (StringUtils.isNoneEmpty(emailAddress, emailAddress)) {
             return ServerResponse.createByErrorMsg("绑定邮箱地址或密码为空");
         }
         String username = (String) request.getSession().getAttribute(Const.CURRENT_USER);
@@ -89,5 +77,17 @@ public class UserController {
         }
 
         return ServerResponse.createBySuccessMsg("绑定邮箱失败");
+    }
+
+    @PostMapping("/checkIfBind")
+    @ResponseBody
+    public ServerResponse<String> checkIfBind(HttpSession session) {
+
+        String username = (String) session.getAttribute(Const.CURRENT_USER);
+        if (username == null) {
+            return ServerResponse.createByErrorMsg("身份信息已失效");
+        }
+
+        return userService.checkIfBind(username);
     }
 }

@@ -16,4 +16,6 @@ public interface IBindRepository extends JpaRepository<Binding, Long> {
     @Query("SELECT COUNT(ID) FROM Binding binding WHERE binding.username = :username AND binding.emailAddress = :emailAddress")
     Integer checkIfUserAlreadyBindThisEmail(@Param("username") String username, @Param("emailAddress") String emailAddress);
 
+    @Query("SELECT COUNT(ID) FROM Binding binding WHERE binding.username = :username")
+    Integer checkIfBind(@Param("username") String username);
 }

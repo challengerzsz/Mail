@@ -24,17 +24,24 @@
     </style>
 </head>
 <body>
-<form class="layui-form" action="./user/register" method="post">
+<form class="layui-form" action="./user/register" method="post" style="margin-left: 50%;">
     <div class="layui-form-item">
-        <label class="layui-form-label">邮箱</label>
+        <label class="layui-form-label">用户名</label>
         <div class="layui-input-inline">
-            <input type="text" name="username" required  lay-verify="required" placeholder="请输入邮箱账号" autocomplete="off" class="layui-input">
+            <input type="text" name="username" required  lay-verify="required" placeholder="请输入注册用户名" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">密码</label>
         <div class="layui-input-inline">
             <input type="password" name="password" required lay-verify="required" placeholder="请输入邮箱密码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">确认密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="password" required lay-verify="required" placeholder="确认输入邮箱密码" autocomplete="off" class="layui-input">
         </div>
         <div class="layui-form-mid layui-word-aux"></div>
     </div>
@@ -78,15 +85,6 @@
             return false;
         });
     });
-
-    var isFailed = document.getElementById("flag");
-    if (isFailed.value == "") {
-        console.log("空");
-    } else {
-        console.log("有");
-        // var layer = layui.layer;
-        layer.msg("登录失败");
-    }
 </script>
 </body>
 </html>

@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>我的邮箱</title>
     <link th:href="@{./js/layui/css/layui.css}" rel="stylesheet"/>
-    <script th:src="@{./js/layui/layui.all.js}"></script>
+    <script th:src="@{./js/layui/layui.js}"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -24,44 +24,44 @@
             <!--</li>-->
         <!--</ul>-->
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item"><a href="javascript:"> <img
-                    src="https://avatars2.githubusercontent.com/u/28896978?s=460&v=4" class="layui-nav-img"/>
-                曾帅智 </a>
+            <li class="layui-nav-item">
+                <a href="javascript:">
+                    <img th:src="${session.CURRENT_USER_IMAGE}" class="layui-nav-img"   th:text="${session.CURRENT_USER}"/>
+
+                </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
+                    <dd><a href="">设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="/mail/user/logout">退出</a></li>
+            <li class="layui-nav-item"><a href="/user/logout">退出</a></li>
         </ul>
     </div>
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed"><a class="" href="javascript:">所有商品</a>
+    <div class="layui-side layui-bg-black" style="width:15%">
+        <div class="layui-side-scroll" style="width:100%">            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test" style="width:100%">
+                <li class="layui-nav-item layui-nav-itemed"><a class="" href="javascript:">发信箱</a>
+                    <dl class="layui-nav-child" style="margin:0 auto;">
+                        <dd><a href="/test" target="body">已发送</a></dd>
+                        <dd><a href="javascript:">草稿箱</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:">收信箱</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:">列表一</a></dd>
                         <dd><a href="javascript:">列表二</a></dd>
-                        <dd><a href="javascript:">列表三</a></dd>
                         <dd><a href="">超链接</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="javascript:">解决方案</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:">列表一</a></dd>
-                        <dd><a href="javascript:">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">云市场</a></li>
-                <li class="layui-nav-item"><a href="">发布商品</a></li>
+                <li class="layui-nav-item"><a href="">订阅</a></li>
             </ul>
         </div>
     </div>
     <div class="layui-body">        <!-- 内容主体区域 -->
-        <div style="padding: 15px">内容主体区域</div>
+        <!--<div style="padding: 15px">内容主体区域</div>-->
+        <iframe name="body" width="100%" height="100%"></iframe>
     </div>
-    <div class="layui-footer">        <!-- 底部固定区域 -->        © layui.com - 底部固定区域</div>
+    <div class="layui-footer">        <!-- 底部固定区域 -->        ©2018 xiyoumobile by zsz </div>
 </div>
 <script>
     //JavaScript代码区域
@@ -71,4 +71,3 @@
 </script>
 </body>
 </html>
-

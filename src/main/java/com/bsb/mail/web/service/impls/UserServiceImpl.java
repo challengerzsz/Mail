@@ -29,36 +29,23 @@ public class UserServiceImpl implements IUserService {
     private IBindRepository bindRepository;
 
     @Override
-    public ServerResponse<User> login(String username, String password) {
-
-        if (!StringUtils.isAllEmpty(username, password)) {
-            User user = userRepository.login(username, password);
-            if (user != null) {
-                return ServerResponse.createBySuccess("登录成功", user);
-            }
-        }
-
-        return ServerResponse.createByErrorMsg("登录失败");
-    }
-
-    @Override
     public Boolean register(String username, String password, String question, String answer) {
 
         password = passwordEncoder.encode(password);
-        User user = new User(2, username, password, question, answer);
+        User user = new User(username, password, question, answer);
         userRepository.save(user);
         return true;
     }
 
     @Override
-    public boolean checkIfUserAlreadyBindThisEmail(String username, String emailAddress) {
+    public Boolean checkIfUserAlreadyBindThisEmail(String username, String emailAddress) {
         return bindRepository.checkIfUserAlreadyBindThisEmail(username, emailAddress) == 1;
     }
 
     @Override
     public ServerResponse<String> bind(String username, String emailAddress) {
 
-        if (StringUtils.isAllEmpty(username, emailAddress)) {
+        if (StringUtils.isNoneEmpty(username, emailAddress)) {
             return ServerResponse.createByErrorMsg("用户名或绑定邮箱为空");
         }
 
@@ -68,5 +55,17 @@ public class UserServiceImpl implements IUserService {
         bindRepository.save(binding);
 
         return ServerResponse.createBySuccessMsg("用户绑定邮箱成功");
+    }
+
+    @Override
+    public ServerResponse<String> checkIfBind(String username) {
+
+        if (!StringUtils.isEmpty(username)) {
+            if (bindRepository.checkIfBind(username) == 1) {
+                return ServerResponse.createBySuccessMsg("用户已有绑定邮箱");
+            }
+        }
+
+        return ServerResponse.createByErrorMsg("用户未绑定邮箱");
     }
 }
