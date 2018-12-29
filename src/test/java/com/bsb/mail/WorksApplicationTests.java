@@ -1,7 +1,7 @@
 package com.bsb.mail;
 
-import com.bsb.mail.pojo.User;
-import com.bsb.mail.web.jpa.IUserRepository;
+import com.bsb.mail.model.User;
+import com.bsb.mail.web.dao.IUserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -42,6 +42,8 @@ dependencies {
     implementation('org.springframework.cloud:spring-cloud-starter-oauth2')
     implementation('org.springframework.session:spring-session-data-redis')
     implementation('org.springframework.session:spring-session-jdbc')
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
     runtimeOnly('mysql:mysql-connector-java')
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')

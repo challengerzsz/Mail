@@ -1,7 +1,10 @@
 package com.bsb.mail.web.controller;
 
+import com.bsb.mail.common.Const;
 import com.bsb.mail.common.SecurityConstants;
-import com.bsb.mail.pojo.User;
+import com.bsb.mail.common.ServerResponse;
+import com.bsb.mail.common.util.RegexUtil;
+import com.bsb.mail.model.User;
 import com.bsb.mail.web.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -14,8 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -33,6 +38,9 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private RegexUtil regexUtil;
 
     @PostMapping("/dev/login")
     public ModelAndView login(ModelAndView modelAndView, @RequestParam String username,
@@ -63,5 +71,23 @@ public class UserController {
             }
         }
         return modelAndView;
+    }
+
+    @PostMapping("/binding")
+    @ResponseBody
+    public ServerResponse<String> binding(HttpServletRequest request, @RequestParam("emailAddress") String emailAddress,
+                                          @RequestParam("emailPassword") String emailPassword) {
+
+        if (StringUtils.isAllEmpty(emailAddress, emailAddress)) {
+            return ServerResponse.createByErrorMsg("绑定邮箱地址或密码为空");
+        }
+        String username = (String) request.getSession().getAttribute(Const.CURRENT_USER);
+        if (!userService.checkIfUserAlreadyBindThisEmail(username, emailAddress)
+                && regexUtil.checkIfEmailCorrect(emailAddress)) {
+
+            return userService.bind(username, emailAddress);
+        }
+
+        return ServerResponse.createBySuccessMsg("绑定邮箱失败");
     }
 }

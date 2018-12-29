@@ -50,6 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(mailAuthenticationSuccessHandler)
                 .failureHandler(mailAuthenticationFailureHandler)
                 .and()
+                .logout()
+                .logoutUrl("/user/logout")
+                .logoutSuccessUrl("/")
+                .and()
                 .csrf().disable();
     }
 

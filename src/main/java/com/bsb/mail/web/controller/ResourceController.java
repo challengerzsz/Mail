@@ -28,7 +28,7 @@ public class ResourceController {
 
     @GetMapping("/bad/{code}")
     public String getBad(@PathVariable Integer code) {
-        return "bad/" + String.valueOf(code);
+        return "bad/" + code;
     }
 
     @GetMapping("/test")

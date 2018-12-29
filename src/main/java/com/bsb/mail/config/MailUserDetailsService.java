@@ -1,6 +1,6 @@
 package com.bsb.mail.config;
 
-import com.bsb.mail.web.jpa.IUserRepository;
+import com.bsb.mail.web.dao.IUserRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +26,17 @@ public class MailUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        if (!StringUtils.isAllEmpty(username)) {
+        UserDetails userDetails = null;
+        if (!StringUtils.isEmpty(username)) {
             String password = userRepository.getPassword(username);
-            if (password != null) {
-                return new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("user"));
+            if (password == null) {
+                throw new UsernameNotFoundException(username);
             }
+//            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userDetails = new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("user"));
         }
 
-        return null;
+        return userDetails;
     }
+
 }

@@ -1,6 +1,6 @@
-package com.bsb.mail.web.jpa;
+package com.bsb.mail.web.dao;
 
-import com.bsb.mail.pojo.User;
+import com.bsb.mail.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +16,9 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     @Query("SELECT user.password FROM User user WHERE user.username =:username")
     String getPassword(@Param("username") String username);
 
-    @Query("SELECT user FROM User user WHERE user.username =:username AND user.password =:password")
+    @Query("FROM User user WHERE user.username =:username AND user.password =:password")
     User login(@Param("username") String username, @Param("password") String password);
+
+    @Query("FROM User user WHERE user.username = :username")
+    User findByUsername(@Param("username") String username);
 }
